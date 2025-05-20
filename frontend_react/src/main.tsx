@@ -2,6 +2,11 @@ import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
+// Initialize Firebase configuration
+import {
+  requestFirebaseMessagingPermission,
+  onForegroundMessage,
+} from './app/firebase/messaging';
 import './fonts.css';
 import './index.css';
 import { routeTree } from './route-tree.gen';
@@ -62,3 +67,8 @@ reportWebVitals();
 
 // Initialize Zod configuration
 zodConfig();
+
+requestFirebaseMessagingPermission();
+onForegroundMessage((payload) => {
+  alert(`通知: ${payload.notification?.title}\n${payload.notification?.body}`);
+});
